@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+const API_URL =
+  "https://v2-aesthetic-clinic-backend-production.up.railway.app";
+
 function DoctorConsultation() {
   const [services, setServices] = useState([]);
 
@@ -7,11 +10,13 @@ function DoctorConsultation() {
     const fetchDoctorServices = async () => {
       try {
         const response = await fetch(
-           "https://v2-aesthetic-clinic-backend-production.up.railway.app"
+          `${API_URL}/api/services`
         );
 
         if (!response.ok) {
-          throw new Error("Unable to load doctor services");
+          throw new Error(
+            "Unable to load doctor services"
+          );
         }
 
         const data = await response.json();
@@ -19,7 +24,7 @@ function DoctorConsultation() {
         const doctorServices = data.filter(
           (item) =>
             item.active === true &&
-            item.category?.toLowerCase() ===
+            item.category?.trim().toLowerCase() ===
               "doctor consultation"
         );
 
@@ -58,7 +63,6 @@ function DoctorConsultation() {
       id="doctor"
     >
       <div className="section-heading">
-
         <span>
           SPECIALIST DOCTOR CARE
         </span>
@@ -72,18 +76,10 @@ function DoctorConsultation() {
           with personalized guidance and treatment
           recommendations.
         </p>
-
       </div>
 
       <div className="doctor-services-scroll">
-
         {services.map((service) => {
-
-          /*
-           * IMAGE
-           * Admin Services-la save panna
-           * image path-a direct-a use pannum.
-           */
           const imageSrc = service.image
             ? service.image.startsWith("http")
               ? service.image
@@ -94,7 +90,8 @@ function DoctorConsultation() {
 
           const price =
             service.price !== null &&
-            service.price !== undefined
+            service.price !== undefined &&
+            service.price !== ""
               ? `₹${Number(
                   service.price
                 ).toLocaleString("en-IN")}`
@@ -102,7 +99,8 @@ function DoctorConsultation() {
 
           const duration =
             service.duration !== null &&
-            service.duration !== undefined
+            service.duration !== undefined &&
+            service.duration !== ""
               ? `${service.duration} Minutes`
               : "30 Minutes";
 
@@ -124,10 +122,8 @@ function DoctorConsultation() {
               className="doctor-card"
               key={service.id}
             >
-
               {/* IMAGE */}
               <div className="doctor-image">
-
                 <img
                   src={imageSrc}
                   alt={doctorName}
@@ -141,16 +137,12 @@ function DoctorConsultation() {
                 <span>
                   Senior Dermatologist
                 </span>
-
               </div>
 
               {/* DETAILS */}
               <div className="doctor-details">
-
                 <div className="doctor-top">
-
                   <div>
-
                     <small>
                       DOCTOR-IN-CLINIC SESSION
                     </small>
@@ -162,13 +154,11 @@ function DoctorConsultation() {
                     <p>
                       MD Dermatologist & Hair Specialist
                     </p>
-
                   </div>
 
                   <strong>
                     ● Available Today
                   </strong>
-
                 </div>
 
                 <p className="doctor-description">
@@ -177,9 +167,7 @@ function DoctorConsultation() {
 
                 {/* PRICE + DURATION */}
                 <div className="consultation-box">
-
                   <div>
-
                     <small>
                       CONSULTATION FEE
                     </small>
@@ -187,11 +175,9 @@ function DoctorConsultation() {
                     <h4>
                       {price}
                     </h4>
-
                   </div>
 
                   <div>
-
                     <small>
                       SESSION DURATION
                     </small>
@@ -199,9 +185,7 @@ function DoctorConsultation() {
                     <h4>
                       {duration}
                     </h4>
-
                   </div>
-
                 </div>
 
                 <small className="check-title">
@@ -209,9 +193,7 @@ function DoctorConsultation() {
                 </small>
 
                 <div className="check-items">
-
                   <div>
-
                     <b>◉</b>
 
                     <strong>
@@ -221,11 +203,9 @@ function DoctorConsultation() {
                     <span>
                       Dark spots, pimples & skin tone
                     </span>
-
                   </div>
 
                   <div>
-
                     <b>✂</b>
 
                     <strong>
@@ -235,11 +215,9 @@ function DoctorConsultation() {
                     <span>
                       Dandruff, thinning & scalp check
                     </span>
-
                   </div>
 
                   <div>
-
                     <b>▣</b>
 
                     <strong>
@@ -249,21 +227,18 @@ function DoctorConsultation() {
                     <span>
                       Exact diagnosis & care steps
                     </span>
-
                   </div>
-
                 </div>
 
                 {/* BUTTONS */}
                 <div className="doctor-buttons">
-
                   <a
                     href={`https://wa.me/919003017003?text=${whatsappMessage}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="doctor-whatsapp-btn"
                   >
-                 Enquiry
+                    Enquiry
                   </a>
 
                   <button
@@ -271,17 +246,13 @@ function DoctorConsultation() {
                     onClick={handleAppointmentClick}
                     className="doctor-appointment-btn"
                   >
-                    For Appointment 
+                    For Appointment
                   </button>
-
                 </div>
-
               </div>
-
             </div>
           );
         })}
-
       </div>
     </section>
   );
