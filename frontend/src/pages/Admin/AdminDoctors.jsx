@@ -62,7 +62,7 @@ function AdminDoctors() {
     e.preventDefault();
 
     const url = editingId
-      ? `http://v2-aesthetic-clinic-backend-production.up.railway.app/api/doctors/${editingId}`
+      ? `https://v2-aesthetic-clinic-backend-production.up.railway.app/api/doctors/${editingId}`
       : "https://v2-aesthetic-clinic-backend-production.up.railway.app";
 
     try {
@@ -122,7 +122,7 @@ function AdminDoctors() {
 
     try {
       const response = await fetch(
-        `http://v2-aesthetic-clinic-backend-production.up.railway.app/api/doctors/${id}`,
+        `https://v2-aesthetic-clinic-backend-production.up.railway.app/api/doctors/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -144,7 +144,7 @@ function AdminDoctors() {
   const toggleStatus = async (doctor) => {
     try {
       const response = await fetch(
-        `http://v2-aesthetic-clinic-backend-production.up.railway.app/api/doctors/${doctor.id}`,
+        `https://v2-aesthetic-clinic-backend-production.up.railway.app/api/doctors/${doctor.id}`,
         {
           method: "PUT",
           headers: {

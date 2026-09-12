@@ -146,7 +146,7 @@ function Appointment() {
 
     try {
       const response = await fetch(
-        "http://v2-aesthetic-clinic-backend-production.up.railway.app/api/appointments",
+        "https://v2-aesthetic-clinic-backend-production.up.railway.app/api/appointments",
         {
           method: "POST",
           headers: {

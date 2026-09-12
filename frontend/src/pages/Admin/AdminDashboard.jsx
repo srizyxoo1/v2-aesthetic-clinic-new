@@ -68,7 +68,7 @@ function AdminDashboard() {
 
     try {
       const response = await fetch(
-        `http://v2-aesthetic-clinic-backend-production.up.railway.app/api/appointments/${id}/status?status=${status}`,
+        `https://v2-aesthetic-clinic-backend-production.up.railway.app/api/appointments/${id}/status?status=${status}`,
         {
           method: "PUT",
           headers: {

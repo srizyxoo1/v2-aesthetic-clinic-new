@@ -17,7 +17,7 @@ function AdminLogin() {
 
     try {
       const response = await fetch(
-        "http://v2-aesthetic-clinic-backend-production.up.railway.app/api/auth/login",
+        "https://v2-aesthetic-clinic-backend-production.up.railway.app/api/auth/login",
         {
           method: "POST",
           headers: {

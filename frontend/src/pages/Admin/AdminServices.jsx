@@ -23,7 +23,7 @@ function AdminServices() {
   const fetchServices = async () => {
     try {
       const response = await fetch(
-        "http://v2-aesthetic-clinic-backend-production.up.railway.app/api/services",
+        "https://v2-aesthetic-clinic-backend-production.up.railway.app/api/services",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -57,8 +57,8 @@ function AdminServices() {
     e.preventDefault();
 
     const url = editingId
-      ? `http://v2-aesthetic-clinic-backend-production.up.railway.app/api/services/${editingId}`
-      : "http://v2-aesthetic-clinic-backend-production.up.railway.app/api/services";
+      ? `https://v2-aesthetic-clinic-backend-production.up.railway.app/api/services/${editingId}`
+      : "https://v2-aesthetic-clinic-backend-production.up.railway.app/api/services";
 
     try {
       const response = await fetch(url, {
@@ -130,7 +130,7 @@ function AdminServices() {
 
     try {
       const response = await fetch(
-        `http://v2-aesthetic-clinic-backend-production.up.railway.app/api/services/${id}`,
+        `https://v2-aesthetic-clinic-backend-production.up.railway.app/api/services/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -152,7 +152,7 @@ function AdminServices() {
   const toggleStatus = async (service) => {
     try {
       const response = await fetch(
-        `http://v2-aesthetic-clinic-backend-production.up.railway.app/api/services/${service.id}`,
+        `https://v2-aesthetic-clinic-backend-production.up.railway.app/api/services/${service.id}`,
         {
           method: "PUT",
           headers: {
