@@ -5,7 +5,7 @@ function HairCare() {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8081/api/services")
+    fetch( "https://v2-aesthetic-clinic-backend-production.up.railway.app")
       .then((response) => response.json())
       .then((data) => {
         const hairServices = data.filter(

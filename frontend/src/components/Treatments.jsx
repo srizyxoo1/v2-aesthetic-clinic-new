@@ -7,7 +7,7 @@ function Treatments() {
     const fetchTreatments = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8081/api/services"
+          " https://v2-aesthetic-clinic-backend-production.up.railway.app"
         );
 
         if (!response.ok) {

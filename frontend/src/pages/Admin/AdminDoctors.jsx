@@ -22,7 +22,7 @@ function AdminDoctors() {
   const fetchDoctors = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8081/api/doctors",
+        "https://v2-aesthetic-clinic-backend-production.up.railway.app",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -62,8 +62,8 @@ function AdminDoctors() {
     e.preventDefault();
 
     const url = editingId
-      ? `http://localhost:8081/api/doctors/${editingId}`
-      : "http://localhost:8081/api/doctors";
+      ? `http://v2-aesthetic-clinic-backend-production.up.railway.app/api/doctors/${editingId}`
+      : "https://v2-aesthetic-clinic-backend-production.up.railway.app";
 
     try {
       const response = await fetch(url, {
@@ -122,7 +122,7 @@ function AdminDoctors() {
 
     try {
       const response = await fetch(
-        `http://localhost:8081/api/doctors/${id}`,
+        `http://v2-aesthetic-clinic-backend-production.up.railway.app/api/doctors/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -144,7 +144,7 @@ function AdminDoctors() {
   const toggleStatus = async (doctor) => {
     try {
       const response = await fetch(
-        `http://localhost:8081/api/doctors/${doctor.id}`,
+        `http://v2-aesthetic-clinic-backend-production.up.railway.app/api/doctors/${doctor.id}`,
         {
           method: "PUT",
           headers: {

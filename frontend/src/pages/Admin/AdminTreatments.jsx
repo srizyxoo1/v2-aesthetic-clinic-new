@@ -21,7 +21,7 @@ function AdminTreatments() {
   const fetchTreatments = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8081/api/treatments",
+        "http://v2-aesthetic-clinic-backend-production.up.railway.app/api/treatments",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,8 +61,8 @@ function AdminTreatments() {
     e.preventDefault();
 
     const url = editingId
-      ? `http://localhost:8081/api/treatments/${editingId}`
-      : "http://localhost:8081/api/treatments";
+      ? `http://v2-aesthetic-clinic-backend-production.up.railway.app/api/treatments/${editingId}`
+      : "http://v2-aesthetic-clinic-backend-production.up.railway.app/api/treatments";
 
     try {
       const response = await fetch(url, {
@@ -119,7 +119,7 @@ function AdminTreatments() {
 
     try {
       const response = await fetch(
-        `http://localhost:8081/api/treatments/${id}`,
+        `http://v2-aesthetic-clinic-backend-production.up.railway.app/api/treatments/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -141,7 +141,7 @@ function AdminTreatments() {
   const toggleStatus = async (treatment) => {
     try {
       const response = await fetch(
-        `http://localhost:8081/api/treatments/${treatment.id}`,
+        `http://v2-aesthetic-clinic-backend-production.up.railway.app/api/treatments/${treatment.id}`,
         {
           method: "PUT",
           headers: {

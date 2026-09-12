@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 
 const APPOINTMENTS_API =
-  "http://localhost:8081/api/appointments";
+  "http://v2-aesthetic-clinic-backend-production.up.railway.app/api/appointments";
 
 const SERVICES_API =
-  "http://localhost:8081/api/services";
+  "http://v2-aesthetic-clinic-backend-production.up.railway.app/api/services";
 
 function AdminRevenue() {
   const [appointments, setAppointments] = useState([]);

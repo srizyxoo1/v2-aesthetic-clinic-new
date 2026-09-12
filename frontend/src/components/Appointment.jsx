@@ -29,7 +29,7 @@ function Appointment() {
     const fetchServices = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8081/api/services"
+          "https://v2-aesthetic-clinic-backend-production.up.railway.app"
         );
 
         if (response.ok) {
@@ -146,7 +146,7 @@ function Appointment() {
 
     try {
       const response = await fetch(
-        "http://localhost:8081/api/appointments",
+        "http://v2-aesthetic-clinic-backend-production.up.railway.app/api/appointments",
         {
           method: "POST",
           headers: {

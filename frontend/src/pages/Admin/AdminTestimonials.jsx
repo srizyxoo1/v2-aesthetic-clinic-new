@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const API_URL = "http://localhost:8081/api/testimonials";
+const API_URL = "http://v2-aesthetic-clinic-backend-production.up.railway.app/api/testimonials";
 
 function AdminTestimonials() {
   const [testimonials, setTestimonials] = useState([]);

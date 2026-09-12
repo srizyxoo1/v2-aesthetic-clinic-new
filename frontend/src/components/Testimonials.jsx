@@ -4,7 +4,7 @@ function Testimonials() {
   const [testimonials, setTestimonials] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8081/api/testimonials")
+    fetch( "https://v2-aesthetic-clinic-backend-production.up.railway.app")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to load testimonials");
