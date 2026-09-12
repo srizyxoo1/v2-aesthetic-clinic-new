@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+const API_URL =
+  "https://v2-aesthetic-clinic-backend-production.up.railway.app";
+
 function Appointment() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -28,22 +31,20 @@ function Appointment() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch(
-          "https://v2-aesthetic-clinic-backend-production.up.railway.app"
+        const response = await fetch(`${API_URL}/api/services`);
+
+        if (!response.ok) {
+          throw new Error("Failed to load services");
+        }
+
+        const data = await response.json();
+
+        // Only active services should appear for customers
+        const activeServices = data.filter(
+          (item) => item.active === true
         );
 
-        if (response.ok) {
-          const data = await response.json();
-
-          // Only active services should appear for customers
-          const activeServices = data.filter(
-            (item) => item.active === true
-          );
-
-          setServices(activeServices);
-        } else {
-          setServices([]);
-        }
+        setServices(activeServices);
       } catch (err) {
         console.error("Unable to fetch services", err);
         setServices([]);
@@ -125,9 +126,7 @@ function Appointment() {
 
     // Make sure category and service are selected
     if (!category || !service) {
-      setError(
-        "Please select a category and service."
-      );
+      setError("Please select a category and service.");
 
       setLoading(false);
       return;
@@ -141,12 +140,12 @@ function Appointment() {
       service: service,
       appointmentDate: appointmentDate,
       appointmentTime: appointmentTime,
-       message: message,
+      message: message,
     };
 
     try {
       const response = await fetch(
-        "https://v2-aesthetic-clinic-backend-production.up.railway.app/api/appointments",
+        `${API_URL}/api/appointments`,
         {
           method: "POST",
           headers: {
@@ -259,7 +258,7 @@ function Appointment() {
             rel="noreferrer"
             className="appointment-whatsapp"
           >
-             Chat on WhatsApp
+            Chat on WhatsApp
           </a>
 
         </div>
