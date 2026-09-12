@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 
+const API_URL =
+  "https://v2-aesthetic-clinic-backend-production.up.railway.app";
+
 function Treatments() {
   const [treatments, setTreatments] = useState([]);
 
   useEffect(() => {
     const fetchTreatments = async () => {
       try {
-        const response = await fetch(
-          " https://v2-aesthetic-clinic-backend-production.up.railway.app"
-        );
+        const response = await fetch(`${API_URL}/api/services`);
 
         if (!response.ok) {
           throw new Error("Unable to load treatments");
@@ -58,10 +59,7 @@ function Treatments() {
   }, []);
 
   return (
-    <section
-      className="treatments-section"
-      id="treatments"
-    >
+    <section className="treatments-section" id="treatments">
       <div className="treatments-heading">
         <div>
           <span>02 • OUR TREATMENTS</span>
@@ -108,12 +106,15 @@ function Treatments() {
                       : ""}
                   </span>
 
-                  <strong>
-                    ₹
-                    {Number(
-                      treatment.price || 0
-                    ).toLocaleString("en-IN")}
-                  </strong>
+                  {treatment.price != null &&
+                    Number(treatment.price) > 0 && (
+                      <strong>
+                        ₹
+                        {Number(
+                          treatment.price
+                        ).toLocaleString("en-IN")}
+                      </strong>
+                    )}
                 </div>
 
                 <h3>{treatment.name}</h3>
@@ -125,7 +126,7 @@ function Treatments() {
                     href="#booking"
                     className="treatment-book-btn"
                   >
-                    For Appointment 
+                    For Appointment
                   </a>
 
                   <a
@@ -133,8 +134,8 @@ function Treatments() {
                     className="treatment-whatsapp-btn"
                     target="_blank"
                     rel="noopener noreferrer"
-                  >Enquiry
-
+                  >
+                    Enquiry
                   </a>
                 </div>
               </div>

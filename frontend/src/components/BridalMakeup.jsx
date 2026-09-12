@@ -1,24 +1,37 @@
 import { useEffect, useState } from "react";
 import ServiceCard from "./ServiceCard";
 
+const API_URL =
+  "https://v2-aesthetic-clinic-backend-production.up.railway.app";
+
 function BridalMakeup() {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    fetch( "https://v2-aesthetic-clinic-backend-production.up.railway.app")
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchBridalServices = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/services`);
+
+        if (!response.ok) {
+          throw new Error("Unable to load bridal services");
+        }
+
+        const data = await response.json();
+
         const bridalServices = data.filter(
           (service) =>
             service.active &&
-            service.category.toLowerCase() === "bridal makeup"
+            service.category?.trim().toLowerCase() === "bridal makeup"
         );
 
         setServices(bridalServices);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Unable to load bridal services:", error);
-      });
+        setServices([]);
+      }
+    };
+
+    fetchBridalServices();
   }, []);
 
   return (

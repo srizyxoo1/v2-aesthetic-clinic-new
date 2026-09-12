@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import ServiceCard from "./ServiceCard";
 
+const API_URL =
+  "https://v2-aesthetic-clinic-backend-production.up.railway.app";
+
 function SpaWellness() {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
     const fetchSpaServices = async () => {
       try {
-        const response = await fetch(
-          "https://v2-aesthetic-clinic-backend-production.up.railway.app"
-        );
+        const response = await fetch(`${API_URL}/api/services`);
 
         if (!response.ok) {
           throw new Error("Unable to load spa services");
@@ -26,21 +27,21 @@ function SpaWellness() {
           .map((service) => {
             let imagePath = service.image?.trim();
 
-          
+            if (imagePath) {
+              imagePath = imagePath.replace(/\\/g, "/");
 
-if (imagePath) {
-  imagePath = imagePath.replace(/\\/g, "/");
+              imagePath = imagePath.replace(
+                /^frontend\/public/i,
+                ""
+              );
 
-  // Remove Windows/project folder part
-  imagePath = imagePath.replace(/^frontend\/public/i, "");
-
-  if (
-    !imagePath.startsWith("/") &&
-    !imagePath.startsWith("http")
-  ) {
-    imagePath = `/${imagePath}`;
-  }
-}
+              if (
+                !imagePath.startsWith("/") &&
+                !imagePath.startsWith("http")
+              ) {
+                imagePath = `/${imagePath}`;
+              }
+            }
 
             return {
               ...service,

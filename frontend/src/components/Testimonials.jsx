@@ -1,31 +1,38 @@
 import { useEffect, useState } from "react";
 
+const API_URL =
+  "https://v2-aesthetic-clinic-backend-production.up.railway.app";
+
 function Testimonials() {
   const [testimonials, setTestimonials] = useState([]);
 
   useEffect(() => {
-    fetch( "https://v2-aesthetic-clinic-backend-production.up.railway.app")
-      .then((response) => {
+    const fetchTestimonials = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/testimonials`);
+
         if (!response.ok) {
           throw new Error("Failed to load testimonials");
         }
-        return response.json();
-      })
-      .then((data) => {
+
+        const data = await response.json();
+
         const activeTestimonials = data.filter(
           (testimonial) => testimonial.active
         );
 
         setTestimonials(activeTestimonials);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error loading testimonials:", error);
-      });
+        setTestimonials([]);
+      }
+    };
+
+    fetchTestimonials();
   }, []);
 
   return (
     <section className="testimonials-section" id="testimonials">
-
       <div className="testimonials-heading">
         <span>04 • CLIENT EXPERIENCES</span>
 
@@ -38,13 +45,11 @@ function Testimonials() {
       </div>
 
       <div className="testimonials-scroll">
-
         {testimonials.map((testimonial) => (
           <article
             className="testimonial-card"
             key={testimonial.id}
           >
-
             <div className="stars">
               {"★".repeat(testimonial.rating || 5)}
             </div>
@@ -53,11 +58,8 @@ function Testimonials() {
               “{testimonial.review}”
             </p>
 
-            {/* CUSTOMER + GOOGLE BUTTON */}
             <div className="testimonial-bottom">
-
               <div className="testimonial-user">
-
                 <div className="user-avatar">
                   {testimonial.customerName?.charAt(0)}
                 </div>
@@ -66,7 +68,6 @@ function Testimonials() {
                   <h3>{testimonial.customerName}</h3>
                   <span>{testimonial.service}</span>
                 </div>
-
               </div>
 
               {testimonial.googleReviewLink && (
@@ -79,18 +80,16 @@ function Testimonials() {
                   View on Google →
                 </a>
               )}
-
             </div>
-
           </article>
         ))}
-
       </div>
 
-      <div className="scroll-hint">
-        ← Swipe / Scroll to explore reviews →
-      </div>
-
+      {testimonials.length > 0 && (
+        <div className="scroll-hint">
+          ← Swipe / Scroll to explore reviews →
+        </div>
+      )}
     </section>
   );
 }

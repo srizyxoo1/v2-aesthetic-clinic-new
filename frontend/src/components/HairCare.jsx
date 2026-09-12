@@ -1,24 +1,37 @@
 import { useEffect, useState } from "react";
 import ServiceCard from "./ServiceCard";
 
+const API_URL =
+  "https://v2-aesthetic-clinic-backend-production.up.railway.app";
+
 function HairCare() {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    fetch( "https://v2-aesthetic-clinic-backend-production.up.railway.app")
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchHairServices = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/services`);
+
+        if (!response.ok) {
+          throw new Error("Unable to load hair services");
+        }
+
+        const data = await response.json();
+
         const hairServices = data.filter(
           (service) =>
             service.active &&
-            service.category.toLowerCase() === "hair care"
+            service.category?.trim().toLowerCase() === "hair care"
         );
 
         setServices(hairServices);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Unable to load hair services:", error);
-      });
+        setServices([]);
+      }
+    };
+
+    fetchHairServices();
   }, []);
 
   return (
