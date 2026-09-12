@@ -1,0 +1,1037 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #fffdf8;
+  color: #3d291c;
+}
+
+.logo-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+
+
+
+
+
+/* =========================================
+   BRIDAL & PARTY MAKEUP
+========================================= */
+
+.bridal-section {
+  width: 100%;
+  padding: 80px 6%;
+  background: #f8f4ed;
+  overflow: hidden;
+}
+
+/* Heading */
+
+.bridal-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  margin-bottom: 35px;
+}
+
+.bridal-heading span {
+  display: block;
+  margin-bottom: 8px;
+
+  color: #96704d;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 1.6px;
+}
+
+.bridal-heading h2 {
+  margin: 0;
+
+  color: #3d291c;
+
+  font-family: Georgia, serif;
+  font-size: 34px;
+  font-weight: 500;
+}
+
+.bridal-heading p {
+  width: 350px;
+  margin: 0;
+
+  color: #7c7065;
+
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+
+/* =========================================
+   CARD SCROLL
+========================================= */
+
+.bridal-scroll {
+  width: 100%;
+
+  display: flex;
+
+  gap: 20px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  padding: 5px 3px 25px;
+
+  scroll-behavior: smooth;
+
+  scroll-snap-type: x mandatory;
+
+  overscroll-behavior-x: contain;
+}
+
+
+/* Hide ugly default scrollbar */
+
+.bridal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #c8b59d transparent;
+}
+
+.bridal-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.bridal-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bridal-scroll::-webkit-scrollbar-thumb {
+  background: #c8b59d;
+  border-radius: 20px;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.bridal-card {
+  flex: 0 0 calc((100% - 40px) / 3);
+
+  min-width: 0;
+
+  background: #ffffff;
+
+  border: 1px solid #e8dfd3;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  scroll-snap-align: start;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.bridal-card:hover {
+  transform: translateY(-7px);
+
+  box-shadow:
+    0 18px 40px rgba(80, 55, 30, 0.12);
+}
+
+
+/* =========================================
+   LARGE IMAGE
+========================================= */
+
+.bridal-image {
+  width: 100%;
+
+  height: 380px;
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e9dac7,
+      #d8c0a3
+    );
+}
+
+.bridal-image span {
+  color: rgba(118, 80, 47, 0.75);
+
+  font-family: Georgia, serif;
+
+  font-size: 16px;
+
+  letter-spacing: 2px;
+}
+
+
+/* =========================================
+   CARD CONTENT
+========================================= */
+
+.bridal-content {
+  padding: 22px;
+
+  min-height: 175px;
+}
+
+
+/* Price */
+
+.bridal-price {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.bridal-price small {
+  color: #9a8c7e;
+
+  font-size: 9px;
+
+  letter-spacing: 1px;
+}
+
+.bridal-price strong {
+  color: #76502f;
+
+  font-family: Georgia, serif;
+
+  font-size: 15px;
+}
+
+
+/* Title */
+
+.bridal-content h3 {
+  margin: 13px 0 6px;
+
+  color: #3d291c;
+
+  font-family: Georgia, serif;
+
+  font-size: 20px;
+
+  font-weight: 500;
+}
+
+
+/* Description */
+
+.bridal-content p {
+  margin: 0 0 18px;
+
+  color: #81766c;
+
+  font-size: 10px;
+
+  line-height: 1.6;
+}
+
+
+/* Button */
+
+.bridal-book-btn {
+  width: 100%;
+
+  padding: 12px 18px;
+
+  border: none;
+
+  border-radius: 25px;
+
+  background: #76502f;
+
+  color: #ffffff;
+
+  font-size: 10px;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+.bridal-book-btn:hover {
+  background: #5f4026;
+}
+
+
+/* =========================================
+   SCROLL TEXT
+========================================= */
+
+.scroll-hint {
+  margin-top: 15px;
+
+  text-align: center;
+
+  color: #9a8d80;
+
+  font-size: 9px;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .bridal-card {
+    flex: 0 0 calc((100% - 20px) / 2);
+  }
+
+  .bridal-image {
+    height: 320px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .bridal-section {
+    padding: 60px 5%;
+  }
+
+  .bridal-heading {
+    display: block;
+  }
+
+  .bridal-heading h2 {
+    font-size: 28px;
+  }
+
+  .bridal-heading p {
+    width: 100%;
+
+    margin-top: 14px;
+  }
+
+  .bridal-scroll {
+    gap: 15px;
+
+    padding-bottom: 20px;
+  }
+
+  .bridal-card {
+    flex: 0 0 86%;
+  }
+
+  .bridal-image {
+    height: 330px;
+  }
+
+}
+
+
+
+
+
+
+/* =========================================
+   HAIR CARE & STYLING
+========================================= */
+
+.hair-section {
+  width: 100%;
+  padding: 80px 6%;
+  background: #fffdf8;
+  overflow: hidden;
+}
+
+.hair-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  margin-bottom: 35px;
+}
+
+.hair-heading span {
+  display: block;
+  margin-bottom: 8px;
+
+  color: #96704d;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 1.6px;
+}
+
+.hair-heading h2 {
+  margin: 0;
+
+  color: #3d291c;
+
+  font-family: Georgia, serif;
+  font-size: 34px;
+  font-weight: 500;
+}
+
+.hair-heading p {
+  width: 350px;
+  margin: 0;
+
+  color: #7c7065;
+
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+
+/* Horizontal scroll */
+
+.hair-scroll {
+  width: 100%;
+
+  display: flex;
+  gap: 20px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  padding: 5px 3px 25px;
+
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+
+  scrollbar-width: thin;
+  scrollbar-color: #c8b59d transparent;
+}
+
+.hair-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.hair-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hair-scroll::-webkit-scrollbar-thumb {
+  background: #c8b59d;
+  border-radius: 20px;
+}
+
+
+/* Card */
+
+.hair-card {
+  flex: 0 0 calc((100% - 40px) / 3);
+
+  min-width: 0;
+
+  background: #ffffff;
+
+  border: 1px solid #e8dfd3;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  scroll-snap-align: start;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.hair-card:hover {
+  transform: translateY(-7px);
+
+  box-shadow: 0 18px 40px rgba(80, 55, 30, 0.12);
+}
+
+
+/* Large image */
+
+.hair-image {
+  width: 100%;
+  height: 380px;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+    135deg,
+    #e5d7c6,
+    #cfb89b
+  );
+
+  color: #76502f;
+
+  font-family: Georgia, serif;
+  font-size: 16px;
+}
+
+.hair-image span {
+  position: absolute;
+
+  top: 14px;
+  left: 14px;
+
+  padding: 6px 10px;
+
+  border-radius: 15px;
+
+  background: white;
+
+  color: #76502f;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 8px;
+}
+
+
+/* Content */
+
+.hair-content {
+  padding: 22px;
+  min-height: 175px;
+}
+
+.hair-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hair-price small {
+  color: #9a8c7e;
+
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+
+.hair-price strong {
+  color: #76502f;
+
+  font-family: Georgia, serif;
+  font-size: 15px;
+}
+
+.hair-content h3 {
+  margin: 13px 0 6px;
+
+  color: #3d291c;
+
+  font-family: Georgia, serif;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.hair-content p {
+  margin: 0 0 18px;
+
+  color: #81766c;
+
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.hair-book-btn {
+  width: 100%;
+
+  padding: 12px 18px;
+
+  border: none;
+  border-radius: 25px;
+
+  background: #76502f;
+  color: white;
+
+  font-size: 10px;
+
+  cursor: pointer;
+}
+
+.hair-book-btn:hover {
+  background: #5f4026;
+}
+
+
+/* Scroll hint */
+
+.hair-section .scroll-hint {
+  margin-top: 15px;
+
+  text-align: center;
+
+  color: #9a8d80;
+
+  font-size: 9px;
+}
+
+
+/* Tablet */
+
+@media (max-width: 1000px) {
+  .hair-card {
+    flex: 0 0 calc((100% - 20px) / 2);
+  }
+
+  .hair-image {
+    height: 320px;
+  }
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+  .hair-section {
+    padding: 60px 5%;
+  }
+
+  .hair-heading {
+    display: block;
+  }
+
+  .hair-heading h2 {
+    font-size: 28px;
+  }
+
+  .hair-heading p {
+    width: 100%;
+    margin-top: 14px;
+  }
+
+  .hair-scroll {
+    gap: 15px;
+    padding-bottom: 20px;
+  }
+
+  .hair-card {
+    flex: 0 0 86%;
+  }
+
+  .hair-image {
+    height: 330px;
+  }
+
+  .hair-content {
+    padding: 20px;
+  }
+
+  .hair-content h3 {
+    font-size: 19px;
+  }
+
+}
+
+
+
+
+
+
+/* ================================
+   APPOINTMENT
+================================ */
+
+.appointment-section {
+  padding: 100px 6%;
+  background: #f8f2e9;
+}
+
+.appointment-container {
+  max-width: 1200px;
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+  gap: 70px;
+}
+
+/* LEFT */
+
+.appointment-info {
+  flex: 1;
+}
+
+.appointment-tag {
+  display: inline-block;
+
+  margin-bottom: 18px;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+
+  color: #8b6248;
+}
+
+.appointment-info h2 {
+  margin: 0;
+
+  font-family: Georgia, serif;
+
+  font-size: 48px;
+  line-height: 1.12;
+  font-weight: 500;
+
+  color: #3d291c;
+}
+
+.appointment-info h2 span {
+  color: #9b7054;
+  font-style: italic;
+}
+
+.appointment-info > p {
+  max-width: 520px;
+
+  margin: 25px 0 30px;
+
+  font-size: 16px;
+  line-height: 1.8;
+
+  color: #766356;
+}
+
+/* HIGHLIGHTS */
+
+.appointment-highlights {
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+
+  margin-bottom: 30px;
+}
+
+.appointment-highlights > div {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 14px;
+}
+
+.appointment-highlights > div > span {
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #ead9c8;
+  color: #8b6248;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.appointment-highlights strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 15px;
+
+  color: #3d291c;
+}
+
+.appointment-highlights p {
+  margin: 0;
+
+  font-size: 13px;
+
+  color: #806f63;
+}
+
+/* WHATSAPP */
+
+.appointment-whatsapp {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 13px 20px;
+
+  border: 1px solid #cdb49e;
+  border-radius: 30px;
+
+  color: #5d4030;
+
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: 0.3s ease;
+}
+
+.appointment-whatsapp:hover {
+  background: #3d291c;
+  color: white;
+}
+
+/* FORM */
+
+.appointment-form-card {
+  width: 500px;
+
+  padding: 38px;
+
+  background: #fffdf9;
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 15px 45px rgba(72, 48, 32, 0.10);
+}
+
+.form-heading {
+  margin-bottom: 25px;
+}
+
+.form-heading h3 {
+  margin: 0 0 7px;
+
+  font-family: Georgia, serif;
+
+  font-size: 27px;
+  font-weight: 500;
+
+  color: #3d291c;
+}
+
+.form-heading p {
+  margin: 0;
+
+  font-size: 13px;
+
+  color: #8a786b;
+}
+
+/* ROW */
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+/* INPUT */
+
+.form-group {
+  flex: 1;
+
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  color: #594335;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+
+  padding: 13px 14px;
+
+  border: 1px solid #dfd2c6;
+  border-radius: 10px;
+
+  background: #fff;
+
+  font-size: 14px;
+
+  color: #3d291c;
+
+  outline: none;
+
+  transition: 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #9b7054;
+
+  box-shadow:
+    0 0 0 3px rgba(155, 112, 84, 0.08);
+}
+
+.form-group textarea {
+  min-height: 100px;
+
+  resize: vertical;
+}
+
+/* DISABLED SERVICE */
+
+.form-group select:disabled {
+  background: #f4eee7;
+
+  color: #aa9a8d;
+
+  cursor: not-allowed;
+}
+
+/* SUBMIT */
+
+.appointment-submit {
+  width: 100%;
+
+  padding: 15px 20px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #3d291c;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.appointment-submit:hover {
+  background: #6f4d39;
+}
+
+.appointment-submit span {
+  font-size: 18px;
+}
+
+.form-note {
+  display: block;
+
+  margin-top: 13px;
+
+  text-align: center;
+
+  font-size: 11px;
+
+  color: #98877a;
+}
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 700px) {
+
+  .appointment-section {
+    padding: 65px 20px;
+  }
+
+  .appointment-container {
+    flex-direction: column;
+
+    gap: 40px;
+
+    align-items: stretch;
+  }
+
+  .appointment-info h2 {
+    font-size: 36px;
+  }
+
+  .appointment-info > p {
+    font-size: 14px;
+
+    line-height: 1.7;
+  }
+
+  .appointment-highlights {
+    gap: 15px;
+  }
+
+  .appointment-form-card {
+    width: 100%;
+
+    padding: 25px 20px;
+
+    border-radius: 20px;
+  }
+
+  .form-row {
+    flex-direction: column;
+
+    gap: 0;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 13px;
+  }
+
+  .appointment-submit {
+    padding: 14px;
+  }
+}
