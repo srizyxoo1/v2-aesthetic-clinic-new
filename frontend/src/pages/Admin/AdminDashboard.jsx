@@ -6,6 +6,9 @@ function AdminDashboard() {
   const [error, setError] = useState("");
   const [updatingId, setUpdatingId] = useState(null);
 
+  const API_URL =
+    "https://v2-aesthetic-clinic-backend-production.up.railway.app";
+
   const handleLogout = () => {
     localStorage.removeItem("adminToken");
     window.location.href = "/admin/login";
@@ -15,9 +18,14 @@ function AdminDashboard() {
     const fetchAppointments = async () => {
       const token = localStorage.getItem("adminToken");
 
+      if (!token) {
+        window.location.href = "/admin/login";
+        return;
+      }
+
       try {
         const response = await fetch(
-          "https://v2-aesthetic-clinic-backend-production.up.railway.app",
+          `${API_URL}/api/appointments`,
           {
             method: "GET",
             headers: {
@@ -68,7 +76,7 @@ function AdminDashboard() {
 
     try {
       const response = await fetch(
-        `https://v2-aesthetic-clinic-backend-production.up.railway.app/api/appointments/${id}/status?status=${status}`,
+        `${API_URL}/api/appointments/${id}/status?status=${status}`,
         {
           method: "PUT",
           headers: {
@@ -125,7 +133,7 @@ function AdminDashboard() {
 
         <nav className="admin-menu">
 
-         <a href="/admin/dashboard">
+          <a href="/admin/dashboard">
             <span>⌂</span>
             Dashboard
           </a>
@@ -150,10 +158,7 @@ function AdminDashboard() {
             Doctors
           </a>
 
-          <a
-            href="/admin/testimonials"
-           
-          >
+          <a href="/admin/testimonials">
             <span>♡</span>
             Testimonials
           </a>
@@ -263,14 +268,14 @@ function AdminDashboard() {
                 <h2>Recent Appointments</h2>
               </div>
 
-             <button
-  type="button"
-  onClick={() => {
-    window.location.href = "/admin/appointments";
-  }}
->
-  View All →
-</button>
+              <button
+                type="button"
+                onClick={() => {
+                  window.location.href = "/admin/appointments";
+                }}
+              >
+                View All →
+              </button>
 
             </div>
 
@@ -395,84 +400,76 @@ function AdminDashboard() {
           </div>
 
           {/* QUICK ACTIONS */}
-         {/* QUICK ACTIONS */}
-<div className="admin-panel quick-actions-panel">
+          <div className="admin-panel quick-actions-panel">
 
-  <div className="panel-header">
-    <div>
-      <span>MANAGEMENT</span>
-      <h2>Quick Actions</h2>
-    </div>
-  </div>
+            <div className="panel-header">
+              <div>
+                <span>MANAGEMENT</span>
+                <h2>Quick Actions</h2>
+              </div>
+            </div>
 
-  <div className="quick-actions">
+            <div className="quick-actions">
 
-    {/* ADD SERVICE */}
-    <button
-      type="button"
-      onClick={() => {
-        window.location.href = "/admin/services";
-      }}
-    >
-      <span>＋</span>
+              <button
+                type="button"
+                onClick={() => {
+                  window.location.href = "/admin/services";
+                }}
+              >
+                <span>＋</span>
 
-      <div>
-        <strong>Add Service</strong>
-        <small>Create a new service</small>
-      </div>
-    </button>
+                <div>
+                  <strong>Add Service</strong>
+                  <small>Create a new service</small>
+                </div>
+              </button>
 
+              <button
+                type="button"
+                onClick={() => {
+                  window.location.href = "/admin/doctors";
+                }}
+              >
+                <span>＋</span>
 
-    {/* ADD DOCTOR */}
-    <button
-      type="button"
-      onClick={() => {
-        window.location.href = "/admin/doctors";
-      }}
-    >
-      <span>＋</span>
+                <div>
+                  <strong>Add Doctor</strong>
+                  <small>Add clinic doctor</small>
+                </div>
+              </button>
 
-      <div>
-        <strong>Add Doctor</strong>
-        <small>Add clinic doctor</small>
-      </div>
-    </button>
+              <button
+                type="button"
+                onClick={() => {
+                  window.location.href = "/admin/testimonials";
+                }}
+              >
+                <span>＋</span>
 
+                <div>
+                  <strong>Add Testimonial</strong>
+                  <small>Add client review</small>
+                </div>
+              </button>
 
-    {/* ADD TESTIMONIAL */}
-    <button
-      type="button"
-      onClick={() => {
-        window.location.href = "/admin/testimonials";
-      }}
-    >
-      <span>＋</span>
+              <button
+                type="button"
+                onClick={() => {
+                  window.location.href = "/admin/appointments";
+                }}
+              >
+                <span>◷</span>
 
-      <div>
-        <strong>Add Testimonial</strong>
-        <small>Add client review</small>
-      </div>
-    </button>
+                <div>
+                  <strong>View Appointments</strong>
+                  <small>Manage bookings</small>
+                </div>
+              </button>
 
+            </div>
 
-    {/* VIEW APPOINTMENTS */}
-    <button
-      type="button"
-      onClick={() => {
-        window.location.href = "/admin/appointments";
-      }}
-    >
-      <span>◷</span>
-
-      <div>
-        <strong>View Appointments</strong>
-        <small>Manage bookings</small>
-      </div>
-    </button>
-
-  </div>
-
-</div>
+          </div>
 
         </section>
 
