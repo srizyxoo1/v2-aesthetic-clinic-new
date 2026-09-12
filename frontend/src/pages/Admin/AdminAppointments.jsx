@@ -1,5 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 
+const API_URL =
+  "https://v2-aesthetic-clinic-backend-production.up.railway.app";
+
 function AdminAppointments() {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,9 +26,14 @@ function AdminAppointments() {
     const fetchAppointments = async () => {
       const token = localStorage.getItem("adminToken");
 
+      if (!token) {
+        window.location.href = "/admin/login";
+        return;
+      }
+
       try {
         const response = await fetch(
-           "https://v2-aesthetic-clinic-backend-production.up.railway.app",
+          `${API_URL}/api/appointments`,
           {
             method: "GET",
             headers: {
@@ -47,6 +55,7 @@ function AdminAppointments() {
           setError("Unable to load appointments.");
         }
       } catch (err) {
+        console.error("Unable to fetch appointments", err);
         setError("Unable to connect to clinic server.");
       } finally {
         setLoading(false);
@@ -92,11 +101,16 @@ function AdminAppointments() {
   const updateAppointmentStatus = async (id, status) => {
     const token = localStorage.getItem("adminToken");
 
+    if (!token) {
+      window.location.href = "/admin/login";
+      return;
+    }
+
     setUpdatingId(id);
 
     try {
       const response = await fetch(
-        `https://v2-aesthetic-clinic-backend-production.up.railway.app/${id}/status?status=${status}`,
+        `${API_URL}/api/appointments/${id}/status?status=${status}`,
         {
           method: "PUT",
           headers: {
@@ -125,16 +139,14 @@ function AdminAppointments() {
         alert("Unable to update appointment status.");
       }
     } catch (err) {
+      console.error("Update appointment error", err);
       alert("Unable to connect to clinic server.");
     } finally {
       setUpdatingId(null);
     }
   };
 
-  /* =========================================
-     FILTER APPOINTMENTS
-  ========================================= */
-
+  /* FILTER APPOINTMENTS */
   const filteredAppointments = useMemo(() => {
     return appointments
       .filter((appointment) => {
@@ -159,7 +171,6 @@ function AdminAppointments() {
             .includes(searchValue)
         );
       })
-
       .filter((appointment) => {
         if (statusFilter === "ALL") {
           return true;
@@ -167,7 +178,6 @@ function AdminAppointments() {
 
         return appointment.status === statusFilter;
       })
-
       .filter((appointment) => {
         if (!exactDate) {
           return true;
@@ -175,7 +185,6 @@ function AdminAppointments() {
 
         return appointment.appointmentDate === exactDate;
       })
-
       .filter((appointment) => {
         if (!fromDate) {
           return true;
@@ -183,7 +192,6 @@ function AdminAppointments() {
 
         return appointment.appointmentDate >= fromDate;
       })
-
       .filter((appointment) => {
         if (!toDate) {
           return true;
@@ -191,7 +199,6 @@ function AdminAppointments() {
 
         return appointment.appointmentDate <= toDate;
       })
-
       .slice()
       .reverse();
   }, [
@@ -215,10 +222,6 @@ function AdminAppointments() {
     (item) => item.status === "COMPLETED"
   ).length;
 
-  /* =========================================
-     CLEAR FILTERS
-  ========================================= */
-
   const clearFilters = () => {
     setSearch("");
     setStatusFilter("ALL");
@@ -234,7 +237,6 @@ function AdminAppointments() {
       <aside className="admin-sidebar">
 
         <div className="admin-sidebar-logo">
-
           <img
             src="/images/icon.jpeg"
             alt="V2 Aesthetic Logo"
@@ -244,7 +246,6 @@ function AdminAppointments() {
             <h2>V2 Aesthetic</h2>
             <span>ADMIN PANEL</span>
           </div>
-
         </div>
 
         <nav className="admin-menu">
@@ -254,7 +255,10 @@ function AdminAppointments() {
             Dashboard
           </a>
 
-          <a href="/admin/appointments">
+          <a
+            href="/admin/appointments"
+            className="active"
+          >
             <span>◷</span>
             Appointments
           </a>
@@ -274,10 +278,7 @@ function AdminAppointments() {
             Doctors
           </a>
 
-          <a
-            href="/admin/testimonials"
-           
-          >
+          <a href="/admin/testimonials">
             <span>♡</span>
             Testimonials
           </a>
@@ -286,6 +287,7 @@ function AdminAppointments() {
             <span>₹</span>
             Revenue
           </a>
+
         </nav>
 
         <a
@@ -304,7 +306,6 @@ function AdminAppointments() {
         <header className="admin-header">
 
           <div>
-
             <span className="admin-header-label">
               V2 AESTHETIC ADMIN
             </span>
@@ -314,7 +315,6 @@ function AdminAppointments() {
             <p>
               Manage and track all clinic appointments.
             </p>
-
           </div>
 
           <button
@@ -331,10 +331,7 @@ function AdminAppointments() {
         <section className="admin-stats">
 
           <div className="admin-stat-card">
-
-            <div className="stat-icon">
-              ◷
-            </div>
+            <div className="stat-icon">◷</div>
 
             <div>
               <span>Total Appointments</span>
@@ -347,14 +344,10 @@ function AdminAppointments() {
                 All clinic bookings
               </small>
             </div>
-
           </div>
 
           <div className="admin-stat-card">
-
-            <div className="stat-icon">
-              ◌
-            </div>
+            <div className="stat-icon">◌</div>
 
             <div>
               <span>Pending</span>
@@ -367,14 +360,10 @@ function AdminAppointments() {
                 Waiting for confirmation
               </small>
             </div>
-
           </div>
 
           <div className="admin-stat-card">
-
-            <div className="stat-icon">
-              ✓
-            </div>
+            <div className="stat-icon">✓</div>
 
             <div>
               <span>Confirmed</span>
@@ -387,14 +376,10 @@ function AdminAppointments() {
                 Confirmed bookings
               </small>
             </div>
-
           </div>
 
           <div className="admin-stat-card">
-
-            <div className="stat-icon">
-              ★
-            </div>
+            <div className="stat-icon">★</div>
 
             <div>
               <span>Completed</span>
@@ -407,7 +392,6 @@ function AdminAppointments() {
                 Completed appointments
               </small>
             </div>
-
           </div>
 
         </section>
@@ -419,7 +403,6 @@ function AdminAppointments() {
           <div className="appointments-management-header">
 
             <div>
-
               <span>
                 BOOKINGS MANAGEMENT
               </span>
@@ -427,7 +410,6 @@ function AdminAppointments() {
               <h2>
                 All Appointments
               </h2>
-
             </div>
 
             <div className="appointments-count">
@@ -441,7 +423,6 @@ function AdminAppointments() {
 
             {/* SEARCH */}
             <div className="appointment-search">
-
               <span>⌕</span>
 
               <input
@@ -452,15 +433,12 @@ function AdminAppointments() {
                   setSearch(e.target.value)
                 }
               />
-
             </div>
 
             {/* EXACT DATE */}
             <div className="appointment-date-filter">
 
-              <label>
-                Date
-              </label>
+              <label>Date</label>
 
               <input
                 type="date"
@@ -480,9 +458,7 @@ function AdminAppointments() {
             {/* FROM DATE */}
             <div className="appointment-date-filter">
 
-              <label>
-                From
-              </label>
+              <label>From</label>
 
               <input
                 type="date"
@@ -498,9 +474,7 @@ function AdminAppointments() {
             {/* TO DATE */}
             <div className="appointment-date-filter">
 
-              <label>
-                To
-              </label>
+              <label>To</label>
 
               <input
                 type="date"
@@ -521,7 +495,6 @@ function AdminAppointments() {
                 setStatusFilter(e.target.value)
               }
             >
-
               <option value="ALL">
                 All Status
               </option>
@@ -541,7 +514,6 @@ function AdminAppointments() {
               <option value="CANCELLED">
                 Cancelled
               </option>
-
             </select>
 
             {/* CLEAR */}
@@ -559,27 +531,11 @@ function AdminAppointments() {
           <div className="full-appointments-table">
 
             <div className="full-table-head">
-
-              <span>
-                Customer
-              </span>
-
-              <span>
-                Contact
-              </span>
-
-              <span>
-                Service
-              </span>
-
-              <span>
-                Date & Time
-              </span>
-
-              <span>
-                Status
-              </span>
-
+              <span>Customer</span>
+              <span>Contact</span>
+              <span>Service</span>
+              <span>Date & Time</span>
+              <span>Status</span>
             </div>
 
             {/* LOADING */}
@@ -610,7 +566,6 @@ function AdminAppointments() {
               !error &&
               filteredAppointments.map(
                 (appointment) => (
-
                   <div
                     className="full-appointment-row"
                     key={appointment.id}
@@ -626,7 +581,6 @@ function AdminAppointments() {
                       </div>
 
                       <div>
-
                         <strong>
                           {appointment.title}{" "}
                           {appointment.name}
@@ -635,18 +589,15 @@ function AdminAppointments() {
                         <small>
                           #{appointment.id}
                         </small>
-
                       </div>
 
                     </div>
 
                     {/* CONTACT */}
                     <div className="appointment-contact">
-
                       <strong>
                         +91 {appointment.phone}
                       </strong>
-
                     </div>
 
                     {/* SERVICE */}
@@ -724,7 +675,6 @@ function AdminAppointments() {
                     </div>
 
                   </div>
-
                 )
               )}
 

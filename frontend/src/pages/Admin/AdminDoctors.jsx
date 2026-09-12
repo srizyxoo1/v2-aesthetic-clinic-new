@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+const API_URL =
+  "https://v2-aesthetic-clinic-backend-production.up.railway.app";
+
 function AdminDoctors() {
   const [doctors, setDoctors] = useState([]);
   const [search, setSearch] = useState("");
@@ -17,28 +20,30 @@ function AdminDoctors() {
     active: true,
   });
 
-  const token = localStorage.getItem("adminToken");
-
   const fetchDoctors = async () => {
+    const token = localStorage.getItem("adminToken");
+
+    if (!token) {
+      window.location.href = "/admin/login";
+      return;
+    }
+
     try {
-      const response = await fetch(
-        "https://v2-aesthetic-clinic-backend-production.up.railway.app",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${API_URL}/api/doctors`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.ok) {
         const data = await response.json();
         setDoctors(data);
-      } else if (
-        response.status === 401 ||
-        response.status === 403
-      ) {
+      } else if (response.status === 401 || response.status === 403) {
         localStorage.removeItem("adminToken");
         window.location.href = "/admin/login";
+      } else {
+        console.error("Unable to fetch doctors:", response.status);
       }
     } catch (error) {
       console.error("Unable to fetch doctors", error);
@@ -61,9 +66,16 @@ function AdminDoctors() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem("adminToken");
+
+    if (!token) {
+      window.location.href = "/admin/login";
+      return;
+    }
+
     const url = editingId
-      ? `https://v2-aesthetic-clinic-backend-production.up.railway.app/api/doctors/${editingId}`
-      : "https://v2-aesthetic-clinic-backend-production.up.railway.app";
+      ? `${API_URL}/api/doctors/${editingId}`
+      : `${API_URL}/api/doctors`;
 
     try {
       const response = await fetch(url, {
@@ -87,6 +99,9 @@ function AdminDoctors() {
       if (response.ok) {
         await fetchDoctors();
         resetForm();
+      } else if (response.status === 401 || response.status === 403) {
+        localStorage.removeItem("adminToken");
+        window.location.href = "/admin/login";
       } else {
         alert("Unable to save doctor");
       }
@@ -120,55 +135,73 @@ function AdminDoctors() {
 
     if (!confirmed) return;
 
+    const token = localStorage.getItem("adminToken");
+
+    if (!token) {
+      window.location.href = "/admin/login";
+      return;
+    }
+
     try {
-      const response = await fetch(
-        `https://v2-aesthetic-clinic-backend-production.up.railway.app/api/doctors/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${API_URL}/api/doctors/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.ok) {
         await fetchDoctors();
+      } else if (response.status === 401 || response.status === 403) {
+        localStorage.removeItem("adminToken");
+        window.location.href = "/admin/login";
       } else {
         alert("Unable to delete doctor");
       }
     } catch (error) {
       console.error("Delete doctor error", error);
+      alert("Unable to connect to server");
     }
   };
 
   const toggleStatus = async (doctor) => {
+    const token = localStorage.getItem("adminToken");
+
+    if (!token) {
+      window.location.href = "/admin/login";
+      return;
+    }
+
     try {
-      const response = await fetch(
-        `https://v2-aesthetic-clinic-backend-production.up.railway.app/api/doctors/${doctor.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            name: doctor.name,
-            specialization: doctor.specialization,
-            experience: doctor.experience,
-            consultationFee: doctor.consultationFee,
-            phone: doctor.phone,
-            description: doctor.description,
-            image: doctor.image,
-            active: !doctor.active,
-          }),
-        }
-      );
+      const response = await fetch(`${API_URL}/api/doctors/${doctor.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: doctor.name,
+          specialization: doctor.specialization,
+          experience: doctor.experience,
+          consultationFee: doctor.consultationFee,
+          phone: doctor.phone,
+          description: doctor.description,
+          image: doctor.image,
+          active: !doctor.active,
+        }),
+      });
 
       if (response.ok) {
         await fetchDoctors();
+      } else if (response.status === 401 || response.status === 403) {
+        localStorage.removeItem("adminToken");
+        window.location.href = "/admin/login";
+      } else {
+        alert("Unable to update doctor status");
       }
     } catch (error) {
       console.error("Status update error", error);
+      alert("Unable to connect to server");
     }
   };
 
@@ -197,15 +230,10 @@ function AdminDoctors() {
 
   return (
     <div className="admin-dashboard">
-
       {/* SIDEBAR */}
       <aside className="admin-sidebar">
-
         <div className="admin-sidebar-logo">
-          <img
-            src="/images/icon.jpeg"
-            alt="V2 Aesthetic Logo"
-          />
+          <img src="/images/icon.jpeg" alt="V2 Aesthetic Logo" />
 
           <div>
             <h2>V2 Aesthetic</h2>
@@ -214,7 +242,7 @@ function AdminDoctors() {
         </div>
 
         <nav className="admin-menu">
-<a href="/admin/dashboard">
+          <a href="/admin/dashboard">
             <span>⌂</span>
             Dashboard
           </a>
@@ -234,15 +262,12 @@ function AdminDoctors() {
             Services
           </a>
 
-          <a href="/admin/doctors">
+          <a href="/admin/doctors" className="active">
             <span>♧</span>
             Doctors
           </a>
 
-          <a
-            href="/admin/testimonials"
-            
-          >
+          <a href="/admin/testimonials">
             <span>♡</span>
             Testimonials
           </a>
@@ -251,32 +276,21 @@ function AdminDoctors() {
             <span>₹</span>
             Revenue
           </a>
-
         </nav>
 
-        <a
-          href="/"
-          className="admin-back-home"
-        >
+        <a href="/" className="admin-back-home">
           ← Back to Website
         </a>
-
       </aside>
 
       {/* MAIN CONTENT */}
       <main className="admin-main">
-
         {/* HEADER */}
         <div className="services-management-header">
-
           <div>
-            <span className="admin-tag">
-              V2 AESTHETIC
-            </span>
+            <span className="admin-tag">V2 AESTHETIC</span>
 
-            <h1>
-              Doctors Management
-            </h1>
+            <h1>Doctors Management</h1>
 
             <p>
               Manage your clinic doctors and consultation details.
@@ -293,20 +307,15 @@ function AdminDoctors() {
           >
             + Add Doctor
           </button>
-
         </div>
 
         {/* ADD / EDIT FORM */}
         {showForm && (
           <div className="service-form-card">
-
             <div className="service-form-header">
-
               <div>
                 <h2>
-                  {editingId
-                    ? "Edit Doctor"
-                    : "Add New Doctor"}
+                  {editingId ? "Edit Doctor" : "Add New Doctor"}
                 </h2>
 
                 <p>
@@ -323,18 +332,13 @@ function AdminDoctors() {
               >
                 ×
               </button>
-
             </div>
 
             <form onSubmit={handleSubmit}>
-
               <div className="service-form-grid">
-
                 {/* DOCTOR NAME */}
                 <div className="service-form-group">
-                  <label>
-                    Doctor Name
-                  </label>
+                  <label>Doctor Name</label>
 
                   <input
                     type="text"
@@ -348,9 +352,7 @@ function AdminDoctors() {
 
                 {/* SPECIALIZATION */}
                 <div className="service-form-group">
-                  <label>
-                    Specialization
-                  </label>
+                  <label>Specialization</label>
 
                   <input
                     type="text"
@@ -364,9 +366,7 @@ function AdminDoctors() {
 
                 {/* EXPERIENCE */}
                 <div className="service-form-group">
-                  <label>
-                    Experience (Years)
-                  </label>
+                  <label>Experience (Years)</label>
 
                   <input
                     type="number"
@@ -381,9 +381,7 @@ function AdminDoctors() {
 
                 {/* CONSULTATION FEE */}
                 <div className="service-form-group">
-                  <label>
-                    Consultation Fee (₹)
-                  </label>
+                  <label>Consultation Fee (₹)</label>
 
                   <input
                     type="number"
@@ -398,9 +396,7 @@ function AdminDoctors() {
 
                 {/* PHONE */}
                 <div className="service-form-group">
-                  <label>
-                    Phone
-                  </label>
+                  <label>Phone</label>
 
                   <input
                     type="tel"
@@ -413,9 +409,7 @@ function AdminDoctors() {
 
                 {/* IMAGE */}
                 <div className="service-form-group">
-                  <label>
-                    Image Path
-                  </label>
+                  <label>Image Path</label>
 
                   <input
                     type="text"
@@ -432,9 +426,7 @@ function AdminDoctors() {
 
                 {/* DESCRIPTION */}
                 <div className="service-form-group service-description-field">
-                  <label>
-                    Description
-                  </label>
+                  <label>Description</label>
 
                   <textarea
                     name="description"
@@ -444,12 +436,10 @@ function AdminDoctors() {
                     rows="3"
                   />
                 </div>
-
               </div>
 
               {/* ACTIVE */}
               <label className="service-active-option">
-
                 <input
                   type="checkbox"
                   name="active"
@@ -457,15 +447,11 @@ function AdminDoctors() {
                   onChange={handleChange}
                 />
 
-                <span>
-                  Doctor is active
-                </span>
-
+                <span>Doctor is active</span>
               </label>
 
               {/* ACTION BUTTONS */}
               <div className="service-form-actions">
-
                 <button
                   type="button"
                   className="service-cancel-btn"
@@ -478,100 +464,68 @@ function AdminDoctors() {
                   type="submit"
                   className="service-save-btn"
                 >
-                  {editingId
-                    ? "Update Doctor"
-                    : "Save Doctor"}
+                  {editingId ? "Update Doctor" : "Save Doctor"}
                 </button>
-
               </div>
-
             </form>
-
           </div>
         )}
 
         {/* SEARCH */}
         <div className="services-toolbar">
-
           <div className="service-search">
-
             <span>⌕</span>
 
             <input
               type="text"
               placeholder="Search doctor or specialization..."
               value={search}
-              onChange={(e) =>
-                setSearch(e.target.value)
-              }
+              onChange={(e) => setSearch(e.target.value)}
             />
-
           </div>
 
           <div className="service-count">
             {filteredDoctors.length} Doctors
           </div>
-
         </div>
 
         {/* TABLE */}
         <div className="services-table-card">
-
           <div className="services-table">
-
             <div className="services-table-head">
-
               <span>Doctor</span>
               <span>Specialization</span>
               <span>Experience</span>
               <span>Fee</span>
               <span>Status</span>
               <span>Actions</span>
-
             </div>
 
             {filteredDoctors.length === 0 ? (
-
               <div className="services-empty">
-
                 <div>♧</div>
 
-                <h3>
-                  No doctors found
-                </h3>
+                <h3>No doctors found</h3>
 
                 <p>
                   Add your first clinic doctor to get started.
                 </p>
-
               </div>
-
             ) : (
-
               filteredDoctors.map((doctor) => (
-
                 <div
                   className="services-table-row"
                   key={doctor.id}
                 >
-
                   {/* DOCTOR */}
                   <div className="service-name-cell">
-
-                    <div className="service-icon">
-                      ♧
-                    </div>
+                    <div className="service-icon">♧</div>
 
                     <div>
-                      <strong>
-                        {doctor.name}
-                      </strong>
+                      <strong>{doctor.name}</strong>
 
-                      <small>
-                        Doctor #{doctor.id}
-                      </small>
+                      <small>Doctor #{doctor.id}</small>
                     </div>
-
                   </div>
 
                   {/* SPECIALIZATION */}
@@ -594,7 +548,6 @@ function AdminDoctors() {
 
                   {/* STATUS */}
                   <div>
-
                     <button
                       type="button"
                       className={
@@ -602,25 +555,17 @@ function AdminDoctors() {
                           ? "service-status active"
                           : "service-status inactive"
                       }
-                      onClick={() =>
-                        toggleStatus(doctor)
-                      }
+                      onClick={() => toggleStatus(doctor)}
                     >
-                      {doctor.active
-                        ? "Active"
-                        : "Inactive"}
+                      {doctor.active ? "Active" : "Inactive"}
                     </button>
-
                   </div>
 
                   {/* ACTIONS */}
                   <div className="service-actions">
-
                     <button
                       type="button"
-                      onClick={() =>
-                        handleEdit(doctor)
-                      }
+                      onClick={() => handleEdit(doctor)}
                       title="Edit"
                     >
                       ✎
@@ -628,28 +573,18 @@ function AdminDoctors() {
 
                     <button
                       type="button"
-                      onClick={() =>
-                        handleDelete(doctor.id)
-                      }
+                      onClick={() => handleDelete(doctor.id)}
                       title="Delete"
                     >
                       🗑
                     </button>
-
                   </div>
-
                 </div>
-
               ))
-
             )}
-
           </div>
-
         </div>
-
       </main>
-
     </div>
   );
 }
